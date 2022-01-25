@@ -1,0 +1,17 @@
+{
+  "name": "thermostat",
+  "version": "1.0.0",
+  "description": "Turn things on and off based on temperature readings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Green",
+  "license": "MIT",
+  "dependencies": {
+    "onoff": "^6.0.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}
