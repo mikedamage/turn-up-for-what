@@ -2,11 +2,11 @@
   "name": "thermostat",
   "version": "1.0.0",
   "description": "Turn things on and off based on temperature readings",
-  "main": "index.js",
+  "main": "lib/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "rsync -vzr --exclude=node_modules ./ shed:app/thermostat/"
   },
-  "author": "Mike Green",
+  "author": "Mike Green <mike.is.green@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "onoff": "^6.0.3"
