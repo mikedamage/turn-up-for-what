@@ -1,6 +1,4 @@
-const path = require('path')
-const { readFile, readdir } = require('fs/promises')
-const { Gpio } = require('onoff')
+const App = require('../lib/app')
 
 const relay1 = new Gpio(25, 'out')
 const relay2 = new Gpio(26, 'out')
