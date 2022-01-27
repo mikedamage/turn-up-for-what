@@ -11,10 +11,10 @@
   "dependencies": {
     "convict": "^6.2.1",
     "onoff": "^6.0.3",
-    "pino": "^7.6.4"
+    "pino": "^7.6.4",
+    "pino-pretty": "^7.5.1"
   },
   "devDependencies": {
-    "pino-pretty": "^7.5.1",
     "prettier": "^2.5.1"
   }
 }
