@@ -4,14 +4,17 @@
   "description": "Turn things on and off based on temperature readings",
   "main": "lib/app.js",
   "scripts": {
-    "deploy": "rsync -vzr --exclude=node_modules ./ shed:app/thermostat/"
+    "deploy": "rsync -vzr --update --exclude=node_modules ./ shed:app/thermostat/"
   },
   "author": "Mike Green <mike.is.green@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "onoff": "^6.0.3"
+    "convict": "^6.2.1",
+    "onoff": "^6.0.3",
+    "pino": "^7.6.4"
   },
   "devDependencies": {
+    "pino-pretty": "^7.5.1",
     "prettier": "^2.5.1"
   }
 }
