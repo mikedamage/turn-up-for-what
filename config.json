@@ -5,8 +5,9 @@
       "name": "thermometer",
       "driver": "ds18b20",
       "options": {
+        "scale": "F",
         "basePath": "/sys/bus/w1/devices",
-        "scale": "F"
+        "path": "28-041652dd05ff"
       }
     }
   ],

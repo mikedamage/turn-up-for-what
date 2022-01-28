@@ -4,11 +4,10 @@ class BaseSensor extends EventEmitter {
   static defaults = {}
 
   constructor(options = {}) {
+    super()
     this.options = { ...this.constructor.defaults, ...options }
-    this.app = this.config.app
-    this.name = this.config.name
+    this.app = this.options.app
     this.isReady = false
-    this.initialize()
   }
 
   initialize() {

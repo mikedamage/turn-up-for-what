@@ -11,9 +11,12 @@ class DS18B20 extends BaseSensor {
     basePath: '/sys/bus/w1/devices',
   }
 
-  constructor(path, options = {}) {
+  constructor(options = {}) {
     super(options)
-    this.path = join(this.options.basePath, path)
+    this.path = join(this.options.basePath, this.options.path)
+    this.app.logger.info(this.path)
+
+    this.initialize()
   }
 
   async initialize() {
@@ -21,7 +24,7 @@ class DS18B20 extends BaseSensor {
       throw new Error('Path to sensor must be absolute')
     }
 
-    this.name = this.getName()
+    this.name = await this.getName()
 
     super.initialize()
   }
@@ -38,7 +41,7 @@ class DS18B20 extends BaseSensor {
   async read() {
     const rawTemp = await this.getRawTemperature()
     const degreesC = parseInt(rawTemp, 10) / 1000
-    const result = this.config.scale === 'F' ? this.degreesFahrenheit(degreesC) : degreesC
+    const result = this.options.scale === 'F' ? this.degreesFahrenheit(degreesC) : degreesC
 
     return this.formatNumber(result)
   }
