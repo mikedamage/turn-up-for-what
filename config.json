@@ -1,5 +1,15 @@
 {
   "relays": [25, 26],
+  "sensors": [
+    {
+      "name": "thermometer",
+      "driver": "ds18b20",
+      "options": {
+        "basePath": "/sys/bus/w1/devices",
+        "scale": "F"
+      }
+    }
+  ],
   "rules": [
     {
       "maxTemp": 20,

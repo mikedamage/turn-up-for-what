@@ -1,30 +1,34 @@
 const { readFile } = require('fs/promises')
 const { join, isAbsolute } = require('path')
+const BaseSensor = require('./base')
 
-class Sensor {
+/**
+ * Class for reading values from a DS18B20 temperature sensor
+ */
+class DS18B20 extends BaseSensor {
   static defaults = {
     scale: 'F',
+    basePath: '/sys/bus/w1/devices',
   }
 
   constructor(path, options = {}) {
-    this.config = { ...this.constructor.defaults, ...options }
-    this.path = path
-    this.ready = false
+    super(options)
+    this.path = join(this.options.basePath, path)
+  }
 
-    this.getName().then(() => {
-      this.ready = true
-    })
-
+  async initialize() {
     if (!isAbsolute(this.path)) {
       throw new Error('Path to sensor must be absolute')
     }
+
+    this.name = this.getName()
+
+    super.initialize()
   }
 
   async getName() {
-    if (this._name) return this._name
     const name = await readFile(join(this.path, 'name'))
-    this._name = name.toString().trim()
-    return this._name
+    return name.toString().trim()
   }
 
   async getRawTemperature() {
@@ -48,4 +52,4 @@ class Sensor {
   }
 }
 
-module.exports = Sensor
+module.exports = DS18B20
