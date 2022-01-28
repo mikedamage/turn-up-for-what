@@ -32,6 +32,10 @@ class Relay extends Base {
     this.isOn = true
     return result
   }
+
+  reset() {
+    return this.off()
+  }
 }
 
 module.exports = Relay
