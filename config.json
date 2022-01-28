@@ -11,11 +11,40 @@
       }
     }
   ],
+  "outputs": [
+    {
+      "name": "well-head-heater",
+      "driver": "relay",
+      "options": {
+        "pin": 25,
+        "onValue": 0
+      }
+    },
+    {
+      "name": "pressure-tank-heater",
+      "driver": "relay",
+      "options": {
+        "pin": 26,
+        "onValue": 0
+      }
+    }
+  ],
   "rules": [
     {
-      "maxTemp": 20,
-      "relay": 25,
-      "triggerState": "on"
+      "temperature": 20,
+      "comparison": "lte",
+      "action": {
+        "output": "well-head-heater",
+        "state": "on"
+      }
+    },
+    {
+      "temperature": 25,
+      "comparison": "lte",
+      "action": {
+        "output": "pressure-tank-heater",
+        "state": "on"
+      }
     }
   ]
 }
