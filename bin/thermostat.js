@@ -5,10 +5,8 @@ const transport = pino.transport({
 })
 const logger = pino(transport)
 
-logger.info(config)
-
 const AppController = require('../lib/app')
-const app = new AppController(config)
+const app = new AppController({ ...config, logger })
 
 app.start()
 

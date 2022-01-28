@@ -1,3 +1,10 @@
 {
-  "relays": [25, 26]
+  "relays": [25, 26],
+  "rules": [
+    {
+      "maxTemp": 20,
+      "relay": 25,
+      "triggerState": "on"
+    }
+  ]
 }
