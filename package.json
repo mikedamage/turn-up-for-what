@@ -4,7 +4,8 @@
   "description": "Turn things on and off based on temperature readings",
   "main": "lib/app.js",
   "scripts": {
-    "deploy": "rsync -vzr --update --exclude=node_modules ./ shed:app/thermostat/"
+    "deploy": "rsync -vzr --update --exclude=node_modules ./ shed:app/thermostat/",
+    "format": "prettier --write ."
   },
   "author": "Mike Green <mike.is.green@gmail.com>",
   "license": "MIT",

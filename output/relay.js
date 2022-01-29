@@ -13,7 +13,7 @@ class Relay extends Base {
     this.gpio = new Gpio(this.pin, 'out')
     this.isOn = false
 
-    this.off()
+    this.initialize()
   }
 
   async initialize() {

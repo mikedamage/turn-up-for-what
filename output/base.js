@@ -3,7 +3,7 @@ const EventEmitter = require('events')
 class BaseOutput extends EventEmitter {
   constructor(options = {}) {
     super()
-    this.options = {...this.constructor.defaults, options}
+    this.options = { ...this.constructor.defaults, options }
     this.app = this.options.app
     this.isReady = false
   }
