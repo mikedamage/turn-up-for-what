@@ -33,6 +33,7 @@
     {
       "temperature": 20,
       "comparison": "lte",
+      "interval": "2m",
       "action": {
         "output": "well-head-heater",
         "state": "on"
@@ -41,6 +42,7 @@
     {
       "temperature": 25,
       "comparison": "lte",
+      "interval": "2m",
       "action": {
         "output": "pressure-tank-heater",
         "state": "on"
