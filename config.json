@@ -1,5 +1,4 @@
 {
-  "relays": [25, 26],
   "sensors": [
     {
       "name": "thermometer",
