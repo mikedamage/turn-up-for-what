@@ -18,6 +18,8 @@ class BaseSensor extends EventEmitter {
   read() {
     throw new Error('The read() method must be defined by Sensor subclass')
   }
+
+  // TODO: Add debouncing and other utility methods in the base class
 }
 
 module.exports = BaseSensor

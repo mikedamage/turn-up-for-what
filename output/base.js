@@ -5,6 +5,7 @@ class BaseOutput extends EventEmitter {
     super()
     this.options = { ...this.constructor.defaults, options }
     this.app = this.options.app
+    this.state = 'off'
     this.isReady = false
   }
 

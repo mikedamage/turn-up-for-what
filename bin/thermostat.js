@@ -19,14 +19,7 @@ logger.info({ argv })
 const cli = repl.start('thermostat> ')
 cli.context.app = app
 
-/*
-
-logger.info('Starting watcher process')
-app.start()
-
-process.on('SIGINT', async () => {
-  console.log('Stopping main loop and exiting')
+process.on('beforeExit', async () => {
+  logger.info('Stopping main loop and exiting')
   await app.stop()
-  process.exit()
 })
-*/

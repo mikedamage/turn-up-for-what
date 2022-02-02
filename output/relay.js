@@ -11,7 +11,6 @@ class Relay extends Base {
     this.options = { ...this.constructor.defaults, ...options }
     this.pin = this.options.pin
     this.gpio = new Gpio(this.pin, 'out')
-    this.isOn = false
 
     this.initialize()
   }
@@ -23,13 +22,13 @@ class Relay extends Base {
 
   async off() {
     const result = await this.gpio.write(this.options.onValue ^ 1)
-    this.isOn = false
+    this.state = 'off'
     return result
   }
 
   async on() {
     const result = await this.gpio.write(this.options.onValue)
-    this.isOn = true
+    this.state = 'on'
     return result
   }
 

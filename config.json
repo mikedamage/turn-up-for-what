@@ -30,20 +30,22 @@
   ],
   "rules": [
     {
-      "temperature": 20,
+      "threshold": 20,
       "comparison": "lte",
       "interval": "2m",
       "sensor": "thermometer",
+      "immediate": true,
       "action": {
         "output": "well-head-heater",
         "state": "on"
       }
     },
     {
-      "temperature": 25,
+      "threshold": 25,
       "comparison": "lte",
       "interval": "2m",
       "sensor": "thermometer",
+      "immediate": true,
       "action": {
         "output": "pressure-tank-heater",
         "state": "on"
