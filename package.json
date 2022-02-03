@@ -1,16 +1,19 @@
 {
-  "name": "thermostat",
-  "version": "1.0.0",
-  "description": "Turn things on and off based on temperature readings",
+  "name": "turn-up-for-what",
+  "version": "0.1.0",
+  "description": "Turn things on and off based on ensor readings",
   "main": "lib/app.js",
+  "bin": {
+    "tufwd": "bin/tufwd.js"
+  },
   "scripts": {
-    "deploy": "rsync -vzr --update --exclude=node_modules ./ shed:app/thermostat/",
     "format": "prettier --write ."
   },
   "author": "Mike Green <mike.is.green@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "convict": "^6.2.1",
+    "express": "^4.17.2",
     "onoff": "^6.0.3",
     "p-throttle": "^5.0.0",
     "parse-duration": "^1.0.2",
