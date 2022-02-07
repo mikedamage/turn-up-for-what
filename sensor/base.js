@@ -8,6 +8,7 @@ class BaseSensor extends EventEmitter {
     this.options = { ...this.constructor.defaults, ...options }
     this.app = this.options.app
     this.isReady = false
+    this.lastReading = null
   }
 
   initialize() {

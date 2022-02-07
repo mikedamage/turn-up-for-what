@@ -41,9 +41,10 @@ class DS18B20 extends BaseSensor {
   async read() {
     const rawTemp = await this.getRawTemperature()
     const degreesC = parseInt(rawTemp, 10) / 1000
-    const result = this.options.scale === 'F' ? this.degreesFahrenheit(degreesC) : degreesC
+    const result = this.formatNumber(this.options.scale === 'F' ? this.degreesFahrenheit(degreesC) : degreesC)
 
-    return this.formatNumber(result)
+    this.lastReading = result
+    return result
   }
 
   degreesFahrenheit(temp) {

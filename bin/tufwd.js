@@ -22,13 +22,21 @@ const server = createControlServer(app, socket)
 // const cli = repl.start('thermostat> ')
 // cli.context.app = app
 
-process.on('beforeExit', () => {
+const stopServer = () => new Promise((resolve) => {
   server.close(() => {
     app.logger.info('Control server stopped, delete socket %s', socket)
-    fs.unlinkSync(socket)
+    if (fs.existsSync(socket)) fs.unlinkSync(socket)
+    resolve()
   })
 })
 
+process.on('SIGINT', () => {
+  stopServer()
+  process.exit()
+})
+
+process.on('beforeExit', stopServer)
+
 process.on('exit', () => {
-  app.clearTimers()
+  app.pause()
 })
