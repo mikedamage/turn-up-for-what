@@ -1,7 +1,16 @@
-const fs = require('fs')
-const argv = require('yargs').argv
+const os = require('os')
 const path = require('path')
-const repl = require('repl')
+const fs = require('fs')
+/*
+const argv = require('yargs').options({
+  s: {
+    alias: 'socket',
+    describe: 'Unix domain socket to listen for commands',
+    default: path.resolve(os.tmpdir(), 'tufw', 'tufw.sock'),
+    type: 'string',
+  }
+}).argv
+*/
 const config = require('../lib/config')
 const pino = require('pino')
 const logger = pino({
@@ -13,14 +22,11 @@ const logger = pino({
   },
 })
 
-const socket = path.resolve(__dirname, '../tmp/tufw.sock')
+const { socket } = config
 const createControlServer = require('../lib/control-server')
 const AppController = require('../lib/app')
 const app = new AppController({ ...config, logger })
 const server = createControlServer(app, socket)
-
-// const cli = repl.start('thermostat> ')
-// cli.context.app = app
 
 const stopServer = () => new Promise((resolve) => {
   server.close(() => {
@@ -30,9 +36,11 @@ const stopServer = () => new Promise((resolve) => {
   })
 })
 
-process.on('SIGINT', () => {
-  stopServer()
-  process.exit()
+['SIGTERM', 'SIGINT', 'SIGQUIT', 'error'].forEach((signal) => {
+  process.on(signal, () => {
+    stopServer()
+    process.exit()
+  })
 })
 
 process.on('beforeExit', stopServer)
@@ -40,3 +48,5 @@ process.on('beforeExit', stopServer)
 process.on('exit', () => {
   app.pause()
 })
+
+app.start()
