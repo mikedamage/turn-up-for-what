@@ -8,7 +8,7 @@ TUFW monitors data sources (sensors), reading values from them at user-defined i
 to do based on the readings.
 
 It was initially built with temperature control in mind, but it's flexible enough to be used for any application where
-sinple decisions need to be made based on current conditions.
+simple decisions need to be made based on current conditions.
 
 ## YEAH
 
