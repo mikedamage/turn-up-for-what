@@ -28,20 +28,19 @@ const AppController = require('../lib/app')
 const app = new AppController({ ...config, logger })
 const server = createControlServer(app, socket)
 
-const stopServer = () => new Promise((resolve) => {
-  server.close(() => {
-    app.logger.info('Control server stopped, delete socket %s', socket)
-    if (fs.existsSync(socket)) fs.unlinkSync(socket)
-    resolve()
+const stopServer = () =>
+  new Promise((resolve) => {
+    server.close(() => {
+      app.logger.info('Control server stopped, delete socket %s', socket)
+      if (fs.existsSync(socket)) fs.unlinkSync(socket)
+      resolve()
+    })
+  })[('SIGTERM', 'SIGINT', 'SIGQUIT', 'error')].forEach((signal) => {
+    process.on(signal, () => {
+      stopServer()
+      process.exit()
+    })
   })
-})
-
-['SIGTERM', 'SIGINT', 'SIGQUIT', 'error'].forEach((signal) => {
-  process.on(signal, () => {
-    stopServer()
-    process.exit()
-  })
-})
 
 process.on('beforeExit', stopServer)
 

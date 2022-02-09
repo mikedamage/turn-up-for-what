@@ -1,6 +1,7 @@
 const { readFile } = require('fs/promises')
 const { join, isAbsolute } = require('path')
 const BaseSensor = require('./base')
+const { formatNumber, celsiusToFahrenheit } = require('../lib/utils')
 
 /**
  * Class for reading values from a DS18B20 temperature sensor
@@ -14,7 +15,6 @@ class DS18B20 extends BaseSensor {
   constructor(options = {}) {
     super(options)
     this.path = join(this.options.basePath, this.options.path)
-    this.app.logger.info(this.path)
 
     this.initialize()
   }
@@ -41,18 +41,10 @@ class DS18B20 extends BaseSensor {
   async read() {
     const rawTemp = await this.getRawTemperature()
     const degreesC = parseInt(rawTemp, 10) / 1000
-    const result = this.formatNumber(this.options.scale === 'F' ? this.degreesFahrenheit(degreesC) : degreesC)
+    const result = formatNumber(this.options.scale === 'F' ? celsiusToFahrenheit(degreesC) : degreesC)
 
     this.lastReading = result
     return result
-  }
-
-  degreesFahrenheit(temp) {
-    return temp * (9 / 5) + 32
-  }
-
-  formatNumber(num, precision = 2) {
-    return parseFloat(num.toFixed(2))
   }
 }
 

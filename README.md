@@ -14,11 +14,10 @@ simple decisions need to be made based on current conditions.
 
 TUFW is configured via a JSON file that has the following sections:
 
-
-+ `socket`: a UNIX domain socket to listen for control commands on. Used by `tufwctl` to interact with a running `tufwd` process.
-+ `sensors`: an array of objects naming and configuring data sources
-+ `outputs`: an array of objects naming and configuring "outputs" - e.g. GPIO pins, scripts to run, etc.
-+ `rules`: an array containing rule objects describing what to do when sensors return particular values
+- `socket`: a UNIX domain socket to listen for control commands on. Used by `tufwctl` to interact with a running `tufwd` process.
+- `sensors`: an array of objects naming and configuring data sources
+- `outputs`: an array of objects naming and configuring "outputs" - e.g. GPIO pins, scripts to run, etc.
+- `rules`: an array containing rule objects describing what to do when sensors return particular values
 
 ### Example Config
 
