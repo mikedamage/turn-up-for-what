@@ -22,7 +22,7 @@ const logger = pino({
   },
 })
 
-const { socket } = config
+const socket = config.get('socket')
 const createControlServer = require('../lib/control-server')
 const AppController = require('../lib/app')
 const app = new AppController({ ...config, logger })
