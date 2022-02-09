@@ -14,6 +14,7 @@
   "dependencies": {
     "convict": "^6.2.1",
     "express": "^4.17.2",
+    "json5": "^2.2.0",
     "onoff": "^6.0.3",
     "p-throttle": "^5.0.0",
     "parse-duration": "^1.0.2",
