@@ -15,7 +15,7 @@ class NvidiaGpuTemp extends BaseSensor {
   async initialize() {
     const { execa } = await import('execa')
     this.exec = execa
-    super.initialize()
+    return super.initialize()
   }
 
   async read() {
@@ -27,3 +27,5 @@ class NvidiaGpuTemp extends BaseSensor {
     return result
   }
 }
+
+module.exports = NvidiaGpuTemp

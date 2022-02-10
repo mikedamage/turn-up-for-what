@@ -5,7 +5,7 @@ class BaseOutput extends EventEmitter {
     super()
     this.options = { ...this.constructor.defaults, options }
     this.app = this.options.app
-    this.state = 'off'
+    this.state = null
     this.isReady = false
   }
 
@@ -14,12 +14,9 @@ class BaseOutput extends EventEmitter {
     this.emit('ready')
   }
 
-  on() {
-    throw new Error('The on() method must be defined by Output subclass')
-  }
-
-  off() {
-    throw new Error('The off() method must be defined by Output subclass')
+  setState(state) {
+    this.state = state
+    this.emit('stateChange', state)
   }
 
   reset() {

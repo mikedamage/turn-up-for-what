@@ -6,34 +6,35 @@ class Relay extends Base {
     onValue: 0,
   }
 
+  get stateMap() {
+    return {
+      on: this.options.onValue,
+      off: this.options.onValue ^ 1,
+    }
+  }
+
   constructor(options = {}) {
     super(options)
     this.options = { ...this.constructor.defaults, ...options }
     this.pin = this.options.pin
     this.gpio = new Gpio(this.pin, 'out')
-
-    this.initialize()
+    this.state = this.stateMap.off
   }
 
   async initialize() {
-    await this.off()
-    super.initialize()
+    await this.setState('off')
+    return super.initialize()
   }
 
-  async off() {
-    const result = await this.gpio.write(this.options.onValue ^ 1)
-    this.state = 'off'
-    return result
-  }
-
-  async on() {
-    const result = await this.gpio.write(this.options.onValue)
-    this.state = 'on'
+  async setState(state) {
+    const value = this.stateMap[state]
+    const result = await this.gpio.write(value)
+    this.state = value
     return result
   }
 
   reset() {
-    return this.off()
+    return this.setState('off')
   }
 }
 
