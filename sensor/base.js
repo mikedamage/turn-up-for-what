@@ -1,6 +1,6 @@
-const EventEmitter = require('events')
+import EventEmitter from 'node:events'
 
-class BaseSensor extends EventEmitter {
+export default class BaseSensor extends EventEmitter {
   static defaults = {}
 
   constructor(options = {}) {
@@ -22,5 +22,3 @@ class BaseSensor extends EventEmitter {
 
   // TODO: Add debouncing and other utility methods in the base class
 }
-
-module.exports = BaseSensor

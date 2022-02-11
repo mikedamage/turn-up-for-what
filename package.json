@@ -2,6 +2,7 @@
   "name": "turn-up-for-what",
   "version": "0.1.0",
   "description": "Turn things on and off based on ensor readings",
+  "type": "module",
   "main": "lib/app.js",
   "bin": {
     "tufwd": "bin/tufwd.js"

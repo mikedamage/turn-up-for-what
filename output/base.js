@@ -1,6 +1,6 @@
-const EventEmitter = require('events')
+import EventEmitter from 'node:events'
 
-class BaseOutput extends EventEmitter {
+export default class BaseOutput extends EventEmitter {
   constructor(options = {}) {
     super()
     this.options = { ...this.constructor.defaults, options }
@@ -23,5 +23,3 @@ class BaseOutput extends EventEmitter {
     throw new Error('The reset() method must be defined by Output subclass')
   }
 }
-
-module.exports = BaseOutput

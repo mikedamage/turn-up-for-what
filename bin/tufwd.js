@@ -1,9 +1,16 @@
 #!/usr/bin/env node
 
-const path = require('path')
+import path from 'node:path'
+import fs from 'node:fs'
+import yargs from 'yargs'
+import loadConfig, { config } from '../lib/config.js'
+import createControlServer from '../lib/control-server.js'
+import pino from 'pino'
+import AppController from '../lib/app.js'
+
 const CONFIG_HOME = process.env.XDG_CONFIG_HOME || path.join(process.env.HOME, '.config')
-const fs = require('fs')
-const { argv } = require('yargs')
+
+const { argv } = yargs(process.argv)
   .options({
     config: {
       alias: 'c',
@@ -14,8 +21,10 @@ const { argv } = require('yargs')
   })
   .help('h')
   .version()
-const config = require('../lib/config')(argv.config)
-const pino = require('pino')
+
+// const config = loadConfig(argv.config)
+config.loadFile(argv.config)
+const socket = config.get('socket')
 const logger = pino({
   transport: {
     target: 'pino-pretty',
@@ -24,10 +33,6 @@ const logger = pino({
     },
   },
 })
-
-const socket = config.get('socket')
-const createControlServer = require('../lib/control-server')
-const AppController = require('../lib/app')
 const app = new AppController({ config, logger })
 const server = createControlServer(app, socket)
 

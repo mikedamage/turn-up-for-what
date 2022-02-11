@@ -1,4 +1,2 @@
-module.exports = {
-  Base: require('./base'),
-  DS18B20: require('./ds18b20'),
-}
+export { default as Base } from './base.js'
+export { default as DS18B20 } from './ds18b20.js'

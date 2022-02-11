@@ -1,12 +1,12 @@
-const { readFile } = require('fs/promises')
-const { join, isAbsolute } = require('path')
-const BaseSensor = require('./base')
-const { formatNumber, celsiusToFahrenheit } = require('../lib/utils')
+import { readFile } from 'node:fs/promises'
+import { join, isAbsolute } from 'node:path'
+import BaseSensor from './base.js'
+import { formatNumber, celsiusToFahrenheit } from '../lib/utils.js'
 
 /**
  * Class for reading values from a DS18B20 temperature sensor
  */
-class DS18B20 extends BaseSensor {
+export default class DS18B20 extends BaseSensor {
   static defaults = {
     scale: 'F',
     basePath: '/sys/bus/w1/devices',
@@ -47,5 +47,3 @@ class DS18B20 extends BaseSensor {
     return result
   }
 }
-
-module.exports = DS18B20

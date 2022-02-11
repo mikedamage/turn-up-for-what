@@ -1,7 +1,7 @@
-const Base = require('./base')
-const { Gpio } = require('onoff')
+import Base from './base.js'
+import { Gpio } from 'onoff'
 
-class Relay extends Base {
+export default class Relay extends Base {
   static defaults = {
     onValue: 0,
   }
@@ -37,5 +37,3 @@ class Relay extends Base {
     return this.setState('off')
   }
 }
-
-module.exports = Relay

@@ -1,7 +1,8 @@
-const Base = require('./base')
-const {isRelativeNumber} = require('../lib/utils')
+import Base from './base.js'
+import { isRelativeNumber } from '../lib/utils.js'
+import { execa } from 'execa'
 
-class NvidiaGpuPower extends Base {
+export default class NvidiaGpuPower extends Base {
   static defaults = {
     id: 0,
   }
@@ -11,15 +12,13 @@ class NvidiaGpuPower extends Base {
   }
 
   async initialize() {
-    const {execa} = await import('execa')
-    this.exec = execa
     this.originalLevel = await this.getCurrentPowerLimit()
     this.state = this.originalLevel
     return super.initialize()
   }
 
   async getCurrentPowerLimit() {
-    const {stdout} = await this.exec('nvidia-smi', ['--query-gpu=power.limit', '--format=csv,noheader'])
+    const { stdout } = await execa('nvidia-smi', ['--query-gpu=power.limit', '--format=csv,noheader'])
     return parseFloat(stdout.trim())
   }
 
@@ -27,7 +26,7 @@ class NvidiaGpuPower extends Base {
     const absLevel = isRelativeNumber(powerLevel) ? this.state + parseFloat(powerLevel) : powerLevel
 
     try {
-      await this.exec('nvidia-smi', ['-pl', absLevel])
+      await execa('nvidia-smi', ['-pl', absLevel])
       this.state = absLevel
       this.app.logger('Successfully set GPU power level to %s', absLevel)
     } catch (err) {
@@ -39,5 +38,3 @@ class NvidiaGpuPower extends Base {
     return this.setState(this.originalLevel)
   }
 }
-
-module.exports = NvidiaGpuPower

@@ -1,7 +1,7 @@
-const BaseSensor = require('./base')
-const { formatNumber, celsiusToFahrenheit } = require('../lib/utils')
+import BaseSensor from './base.js'
+import { formatNumber, celsiusToFahrenheit } from '../lib/utils.js'
 
-class NvidiaGpuTemp extends BaseSensor {
+export default class NvidiaGpuTemp extends BaseSensor {
   static defaults = {
     gpu: 0,
     scale: 'F',
@@ -27,5 +27,3 @@ class NvidiaGpuTemp extends BaseSensor {
     return result
   }
 }
-
-module.exports = NvidiaGpuTemp
