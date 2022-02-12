@@ -1,9 +1,11 @@
 import EventEmitter from 'node:events'
 
 export default class BaseOutput extends EventEmitter {
+  static defaults = {}
+
   constructor(options = {}) {
     super()
-    this.options = { ...this.constructor.defaults, options }
+    this.options = { ...this.constructor.defaults, ...options }
     this.app = this.options.app
     this.state = null
     this.isReady = false

@@ -18,7 +18,7 @@ export default class NvidiaGpuPower extends Base {
   }
 
   async getCurrentPowerLimit() {
-    const { stdout } = await execa('nvidia-smi', ['--query-gpu=power.limit', '--format=csv,noheader'])
+    const { stdout } = await execa('sudo', ['nvidia-smi', '--query-gpu=power.limit', '--format=csv,noheader'])
     return parseFloat(stdout.trim())
   }
 
@@ -28,9 +28,9 @@ export default class NvidiaGpuPower extends Base {
     try {
       await execa('nvidia-smi', ['-pl', absLevel])
       this.state = absLevel
-      this.app.logger('Successfully set GPU power level to %s', absLevel)
+      this.app.logger.info('Successfully set GPU power level to %s', absLevel)
     } catch (err) {
-      this.app.error('Error setting GPU power level: %O', err)
+      this.app.logger.error('Error setting GPU power level: %O', err)
     }
   }
 

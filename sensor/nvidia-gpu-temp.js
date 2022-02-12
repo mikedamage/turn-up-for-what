@@ -1,10 +1,11 @@
 import BaseSensor from './base.js'
 import { formatNumber, celsiusToFahrenheit } from '../lib/utils.js'
+import { execa } from 'execa'
 
 export default class NvidiaGpuTemp extends BaseSensor {
   static defaults = {
     gpu: 0,
-    scale: 'F',
+    scale: 'C',
   }
 
   constructor(options = {}) {
@@ -12,15 +13,10 @@ export default class NvidiaGpuTemp extends BaseSensor {
     this.initialize()
   }
 
-  async initialize() {
-    const { execa } = await import('execa')
-    this.exec = execa
-    return super.initialize()
-  }
-
   async read() {
-    const { stdout } = this.exec('nvidia-smi', ['--query-gpu=temperature.gpu', '--format=csv,noheader'])
-    const degreesC = parseInt(stdout, 10)
+    const { stdout } = await execa('nvidia-smi', ['--query-gpu=temperature.gpu', '--format=csv,noheader'])
+    this.app.logger.info('gpu temp reading: %O', stdout)
+    const degreesC = parseInt(stdout.trim(), 10)
     const result = formatNumber(this.options.scale === 'F' ? celsiusToFahrenheit(degreesC) : degreesC)
 
     this.lastReading = result
