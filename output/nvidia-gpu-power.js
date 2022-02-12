@@ -18,7 +18,7 @@ export default class NvidiaGpuPower extends Base {
   }
 
   async getCurrentPowerLimit() {
-    const { stdout } = await execa('sudo', ['nvidia-smi', '--query-gpu=power.limit', '--format=csv,noheader'])
+    const { stdout } = await execa('nvidia-smi', ['--query-gpu=power.limit', '--format=csv,noheader'])
     return parseFloat(stdout.trim())
   }
 
