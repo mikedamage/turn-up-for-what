@@ -16,7 +16,7 @@ TODO
 
 ## Configuration
 
-TUFW is configured via a JSON file that has the following sections:
+Turnip is configured via a JSON file that has the following sections:
 
 - `socket`: a UNIX domain socket to listen for control commands on. Used by `tufwctl` to interact with a running `tufwd` process.
 - `sensors`: an array of objects naming and configuring data sources
@@ -64,3 +64,7 @@ TUFW is configured via a JSON file that has the following sections:
   ]
 }
 ```
+
+## Usage
+
+Turnip starts up in the foreground by default, to make it easier to run as a systemd service. By default it will look for a config file at `$XDG_CONFIG_PATH/turnip/config.json`.
