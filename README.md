@@ -1,16 +1,20 @@
-# Turn Up for What
+# Turnip 💡
 
 Monitor sensors and execute actions based on their readings.
 
-## WHAT
+## About
 
-TUFW monitors data sources (sensors), reading values from them at user-defined intervals. It uses rules to decide what
+Turnip monitors data sources (sensors), reading values from them at user-defined intervals. It uses rules to decide what
 to do based on the readings.
 
 It was initially built with temperature control in mind, but it's flexible enough to be used for any application where
 simple decisions need to be made based on current conditions.
 
-## YEAH
+## Installation
+
+TODO
+
+## Configuration
 
 TUFW is configured via a JSON file that has the following sections:
 

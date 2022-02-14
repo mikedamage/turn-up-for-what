@@ -1,11 +1,11 @@
 {
-  "name": "turn-up-for-what",
+  "name": "turnip",
   "version": "0.1.0",
-  "description": "Turn things on and off based on ensor readings",
+  "description": "Perform actions based on sensor readings",
   "type": "module",
   "main": "lib/app.js",
   "bin": {
-    "tufwd": "bin/tufwd.js"
+    "turnip": "bin/turnip.js"
   },
   "scripts": {
     "format": "prettier --write ."
