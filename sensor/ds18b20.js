@@ -10,6 +10,8 @@ export default class DS18B20 extends BaseSensor {
   static defaults = {
     scale: 'F',
     basePath: '/sys/bus/w1/devices',
+    throttleLimit: 1,
+    throttleInterval: 1000,
   }
 
   constructor(options = {}) {
@@ -38,7 +40,7 @@ export default class DS18B20 extends BaseSensor {
     return readFile(join(this.path, 'temperature'))
   }
 
-  async read() {
+  async _read() {
     const rawTemp = await this.getRawTemperature()
     const degreesC = parseInt(rawTemp, 10) / 1000
     const result = formatNumber(this.options.scale === 'F' ? celsiusToFahrenheit(degreesC) : degreesC)
