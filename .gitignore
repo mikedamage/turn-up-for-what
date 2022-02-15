@@ -1,4 +1,4 @@
 node_modules
 *.sock
 deploy.sh
-config.json
+config.json*
