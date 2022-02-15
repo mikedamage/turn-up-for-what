@@ -25,40 +25,53 @@ Turnip is configured via a JSON file that has the following sections:
 
 ### Example Config
 
+I use these rules to keep my graphics card in a comfy temperature range while mining ETH. If the GPU temperature is 44C
+or higher, Turnip decreases the maximum wattage by 10 every 2 minutes until the temperature goes back down. It does the
+reverse if the temp is too low.
+
 ```json
 {
-  "socket": "/tmp/tufw.sock",
   "sensors": [
     {
-      "name": "thermometer",
-      "driver": "ds18b20",
+      "name": "gpuTemp",
+      "driver": "nvidia-gpu-temp",
       "options": {
-        "scale": "F",
-        "basePath": "/sys/bus/w1/devices",
-        "path": "28-041652dd05ff"
+        "scale": "C"
       }
     }
   ],
   "outputs": [
     {
-      "name": "heatLamp",
-      "driver": "relay",
+      "name": "gpuPower",
+      "driver": "nvidia-gpu-power",
       "options": {
-        "pin": 25,
-        "onValue": 0
+        "min": 160,
+        "max": 230
       }
     }
   ],
   "rules": [
     {
-      "threshold": 32,
-      "comparison": "lte",
-      "interval": "5m",
-      "sensor": "thermometer",
+      "threshold": 44,
+      "comparison": "gte",
+      "interval": "2m",
+      "sensor": "gpuTemp",
       "immediate": true,
       "action": {
-        "output": "heatLamp",
-        "state": "on"
+        "output": "gpuPower",
+        "state": "-10"
+      },
+      "resetWhenNegative": false
+    },
+    {
+      "threshold": 40,
+      "comparison": "lte",
+      "interval": "2m",
+      "sensor": "gpuTemp",
+      "immediate": false,
+      "action": {
+        "output": "gpuPower",
+        "state": "+10"
       }
     }
   ]
