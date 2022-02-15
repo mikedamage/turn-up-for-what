@@ -7,8 +7,7 @@ import loadConfig, { config } from '../lib/config.js'
 import createControlServer from '../lib/control-server.js'
 import pino from 'pino'
 import AppController from '../lib/app.js'
-
-const CONFIG_HOME = process.env.XDG_CONFIG_HOME || path.join(process.env.HOME, '.config')
+import { CONFIG_HOME } from '../lib/utils.js'
 
 const { argv } = yargs(process.argv)
   .options({
@@ -33,8 +32,13 @@ const logger = pino({
     },
   },
 })
-const app = new AppController({ config, logger })
-const server = createControlServer(app, socket)
+
+const initApp = () => {
+  const app = new AppController({ config, logger })
+  const server = createControlServer(app, socket)
+  app.start()
+  return { app, server }
+}
 
 const stopServer = () =>
   new Promise((resolve) => {
@@ -55,5 +59,7 @@ process.on('beforeExit', stopServer)
 process.on('exit', () => {
   app.pause()
 })
+
+const { app, server } = initApp()
 
 app.start()

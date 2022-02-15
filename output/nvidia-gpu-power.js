@@ -5,6 +5,8 @@ import { execa } from 'execa'
 export default class NvidiaGpuPower extends Base {
   static defaults = {
     id: 0,
+    max: 230,
+    min: 150,
   }
 
   constructor(options = {}) {
@@ -23,7 +25,15 @@ export default class NvidiaGpuPower extends Base {
   }
 
   async setState(powerLevel) {
-    const absLevel = isRelativeNumber(powerLevel) ? this.state + parseFloat(powerLevel) : powerLevel
+    let absLevel = isRelativeNumber(powerLevel) ? parseFloat(this.state) + parseFloat(powerLevel) : powerLevel
+
+    if (absLevel > this.options.max) {
+      this.app.logger.warn('setting power to max of %s instead of %s', this.options.max, absLevel)
+      absLevel = this.options.max
+    } else if (absLevel < this.options.min) {
+      this.app.logger.warn('setting power to min of %s instead of %s', this.options.max, absLevel)
+      absLevel = this.options.min
+    }
 
     try {
       await execa('nvidia-smi', ['-pl', absLevel])
