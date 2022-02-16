@@ -10,6 +10,7 @@ import AppController from '../lib/app.js'
 import { CONFIG_HOME } from '../lib/utils.js'
 
 const { argv } = yargs(process.argv)
+  .usage('$0 [OPTIONS]')
   .options({
     config: {
       alias: 'c',
@@ -47,12 +48,16 @@ const stopServer = () =>
       if (fs.existsSync(socket)) fs.unlinkSync(socket)
       resolve()
     })
-  })[('SIGTERM', 'SIGINT', 'SIGQUIT', 'error')].forEach((signal) => {
-    process.on(signal, () => {
-      stopServer()
-      process.exit()
-    })
   })
+
+const stopSignals = ['SIGTERM', 'SIGINT', 'SIGQUIT', 'error']
+
+stopSignals.forEach((signal) => {
+  process.on(signal, () => {
+    stopServer()
+    process.exit()
+  })
+})
 
 process.on('beforeExit', stopServer)
 

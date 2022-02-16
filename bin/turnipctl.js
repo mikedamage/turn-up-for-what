@@ -12,8 +12,8 @@ const { argv } = yargs(process.argv)
       alias: 's',
       describe: 'Path to Turnip control socket',
       default: DEFAULT_SOCKET_PATH,
-      type: 'string'
-    }
+      type: 'string',
+    },
   })
   .help('h')
   .version()

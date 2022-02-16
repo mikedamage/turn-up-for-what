@@ -13,7 +13,10 @@ export default class BaseSensor extends EventEmitter {
     this.app = this.options.app
     this.isReady = false
     this.lastReading = null
-    this.throttle = pThrottle({ limit: this.options.throttleLimit || 1, interval: this.options.throttleInterval || 1000 })
+    this.throttle = pThrottle({
+      limit: this.options.throttleLimit || 1,
+      interval: this.options.throttleInterval || 1000,
+    })
   }
 
   initialize() {
