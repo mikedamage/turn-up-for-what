@@ -3,9 +3,12 @@
 import net from 'node:net'
 import yargs from 'yargs'
 import { DEFAULT_SOCKET_PATH } from '../lib/utils.js'
+import { commands } from '../lib/control-server.js'
+
+const availableCommands = ['console', ...Object.keys(commands)]
 
 const { argv } = yargs(process.argv)
-  .usage('turnipctl [-s PATH_TO_SOCKET] COMMAND [...ARGS]')
+  .usage(`turnipctl [-s PATH_TO_SOCKET] COMMAND [...ARGS]`)
   .options({
     socket: {
       alias: 's',
@@ -17,9 +20,12 @@ const { argv } = yargs(process.argv)
   .help('h')
   .version()
   .demandCommand(1, 'Please enter a command')
+  .epilog(`Commands: ${availableCommands.join(', ')}`)
 
 const [command, ...args] = argv._.slice(2)
+
 const client = net.createConnection(argv.socket, () => {
+
   if (command === 'console') {
     const done = () => {
       process.stdin.setRawMode(false)
