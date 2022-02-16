@@ -20,13 +20,29 @@ const { argv } = yargs(process.argv)
 
 const [command, ...args] = argv._.slice(2)
 const client = net.createConnection(argv.socket, () => {
-  if (command !== 'console') {
+  if (command === 'console') {
+    const done = () => {
+      process.stdin.setRawMode(false)
+      process.stdin.pause()
+    }
+
+    client.write('console\r\n', () => {
+      process.stdin.resume()
+      // process.stdin.setRawMode(true)
+      process.stdin.pipe(client)
+      client.pipe(process.stdout)
+    })
+
+    client.on('end', done)
+    client.on('close', done)
+  } else {
+    client.on('data', (data) => {
+      console.log(data.toString())
+    })
+
     client.write([command, ...args].join(' ') + '\r\n', 'utf8', () => {
       client.end()
     })
   }
 })
 
-client.on('data', (data) => {
-  console.log(data.toString())
-})
