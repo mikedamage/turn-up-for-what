@@ -47,4 +47,11 @@ export default class NvidiaGpuPower extends Base {
   async reset() {
     return this.setState(this.originalLevel)
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      originalLevel: this.originalLevel,
+    }
+  }
 }

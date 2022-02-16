@@ -1,4 +1,5 @@
 import EventEmitter from 'node:events'
+import { filterObject } from '../lib/utils.js'
 
 export default class BaseOutput extends EventEmitter {
   static defaults = {}
@@ -23,5 +24,13 @@ export default class BaseOutput extends EventEmitter {
 
   reset() {
     throw new Error('The reset() method must be defined by Output subclass')
+  }
+
+  toJSON() {
+    return {
+      state: this.state,
+      isReady: this.isReady,
+      options: filterObject(this.options, (key) => key !== 'app'),
+    }
   }
 }

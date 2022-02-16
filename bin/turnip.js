@@ -5,6 +5,7 @@ import fs from 'node:fs'
 import yargs from 'yargs'
 import loadConfig, { config } from '../lib/config.js'
 import createControlServer from '../lib/control-server.js'
+import createWebApiServer from '../lib/web-api.js'
 import pino from 'pino'
 import AppController from '../lib/app.js'
 import { CONFIG_HOME } from '../lib/utils.js'
@@ -36,9 +37,10 @@ const logger = pino({
 
 const initApp = () => {
   const app = new AppController({ config, logger })
-  const server = createControlServer(app, socket)
+  const controlServer = createControlServer(app, socket)
+  const apiServer = createWebApiServer(app)
   app.start()
-  return { app, server }
+  return { app, controlServer, apiServer }
 }
 
 const stopServer = () =>
@@ -65,6 +67,6 @@ process.on('exit', () => {
   app.pause()
 })
 
-const { app, server } = initApp()
+const { app } = initApp()
 
 app.start()

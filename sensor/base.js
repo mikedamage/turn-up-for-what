@@ -1,5 +1,6 @@
 import EventEmitter from 'node:events'
 import pThrottle from 'p-throttle'
+import { filterObject } from '../lib/utils.js'
 
 export default class BaseSensor extends EventEmitter {
   static defaults = {
@@ -28,5 +29,13 @@ export default class BaseSensor extends EventEmitter {
   // Subclasses define this method to do the actual reading
   _read() {
     throw new Error('The _read() method must be defined by Sensor subclass')
+  }
+
+  toJSON() {
+    return {
+      options: filterObject(this.options, (key) => key !== 'app'),
+      isReady: this.isReady,
+      lastReading: this.lastReading,
+    }
   }
 }
